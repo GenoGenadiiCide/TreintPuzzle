@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'api.dart';
 import 'puzzle.dart';
 import 'dart:math';
+import 'settings.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,6 +11,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: PuzzleScreen(),
+      routes: {
+        '/settings': (context) => SettingsPage(),
+      },
     );
   }
 }
@@ -92,6 +96,17 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     puzzleHeight = MediaQuery.of(context).size.height * 0.8;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Puzzle'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Center(
           child: imageUrl.isNotEmpty

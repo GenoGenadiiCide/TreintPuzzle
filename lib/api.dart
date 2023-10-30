@@ -6,10 +6,10 @@ class ApiService {
   final String apiKey =
       "1dz3Fjt8HrNNW8XsRzfnTO2LthIKnnsbqVDRgTvi4ygnTxa2xplTRCXJ";
 
-  Future<String> getRandomImage() async {
+  Future<String> getRandomImage({String category = 'nature'}) async {
     final response = await http.get(
       Uri.parse(
-          'https://api.pexels.com/v1/search?query=nature&per_page=1&page=${Random().nextInt(100)}'),
+          'https://api.pexels.com/v1/search?query=$category&per_page=1&page=${Random().nextInt(100)}'),
       headers: {
         "Authorization": apiKey,
       },
