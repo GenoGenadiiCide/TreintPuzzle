@@ -3,6 +3,7 @@ import 'api.dart';
 import 'puzzle.dart';
 import 'dart:math';
 import 'settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,6 +34,11 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
 
   int piecesInPlace = 0;
 
+  Future<String> _loadSelectedCategory() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('selectedCategory') ?? 'nature';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +48,8 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
   }
 
   loadImage() async {
-    String url = await apiService.getRandomImage();
+    String category = await _loadSelectedCategory();
+    String url = await apiService.getRandomImage(category: category);
     setState(() {
       imageUrl = url;
     });

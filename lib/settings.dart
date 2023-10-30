@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -16,6 +17,11 @@ class _SettingsPageState extends State<SettingsPage> {
     'Птицы',
     'Космос'
   ];
+
+  Future<void> _saveSelectedCategory(String category) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('selectedCategory', category);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +45,9 @@ class _SettingsPageState extends State<SettingsPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ApiService().getRandomImage(category: selectedCategory);
+        onPressed: () async {
+          await _saveSelectedCategory(selectedCategory);
+          Navigator.pop(context);
         },
         child: Icon(Icons.check),
       ),
