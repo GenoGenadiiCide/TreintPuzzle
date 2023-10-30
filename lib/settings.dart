@@ -9,14 +9,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   String selectedCategory = 'nature';
-  final categories = [
-    'Природа',
-    'Город',
-    'Океан',
-    'Животные',
-    'Птицы',
-    'Космос'
-  ];
+  final categories = ['Nature', 'City', 'Ocean', 'Animal', 'Bird', 'Space'];
 
   Future<void> _saveSelectedCategory(String category) async {
     final prefs = await SharedPreferences.getInstance();
