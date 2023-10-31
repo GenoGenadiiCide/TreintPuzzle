@@ -74,7 +74,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Puzzle Completed!"),
+          title: const Text("Puzzle completed"),
           actions: [
             TextButton(
               child: const Text("Next"),
@@ -104,7 +104,6 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Puzzle'),
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
