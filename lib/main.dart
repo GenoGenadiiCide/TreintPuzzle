@@ -3,6 +3,7 @@ import 'api.dart';
 import 'puzzle.dart';
 import 'dart:math';
 import 'settings.dart';
+import 'menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
@@ -11,8 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: PuzzleScreen(),
+      home: MenuScreen(),
       routes: {
+        '/puzzle': (context) => PuzzleScreen(),
         '/settings': (context) => SettingsPage(),
       },
     );
