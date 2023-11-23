@@ -1,33 +1,108 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'main.dart';
 import 'settings.dart';
 
 class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: MainMenu(),
+        ),
+      ),
+    );
+  }
+}
+
+class MainMenu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Column(
+      children: [
+        Container(
+          width: screenWidth,
+          height: screenHeight,
+          padding: const EdgeInsets.only(
+            top: 252,
+            left: 40,
+            right: 40,
+            bottom: 52,
+          ),
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(color: Color(0xFFE8E6E6)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PuzzleScreen()),
+                    );
+                  },
+                  child: Container(
+                    width: 148,
+                    height: 130,
+                    child: SvgPicture.asset("assets/Playbutton.svg"),
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.2),
+              _buildButton(
+                title: 'Gallery',
+                iconPath: 'assets/Icon1.svg',
+                onTap: () {},
+              ),
+              SizedBox(height: 20),
+              _buildButton(
+                title: 'Settings',
+                iconPath: 'assets/Icon2.svg',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildButton(
+      {required String title, VoidCallback? onTap, String? iconPath}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 280,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        decoration: BoxDecoration(color: Colors.white),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PuzzleScreen()),
-                );
-              },
-              child: Text('Start Puzzle'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()),
-                );
-              },
-              child: Text('Settings'),
+          children: [
+            if (iconPath != null) ...[
+              SvgPicture.asset(iconPath, width: 24, height: 24),
+              SizedBox(width: 6),
+            ],
+            Text(
+              title,
+              style: TextStyle(
+                color: Color(0xFF352F2F),
+                fontSize: 16,
+                fontFamily: 'FiraMono',
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ],
         ),
