@@ -72,26 +72,6 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     });
   }
 
-  void _showCompletedDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Puzzle completed"),
-          actions: [
-            TextButton(
-              child: const Text("Next"),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _resetPuzzleAndLoadNewImage();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void _resetPuzzleAndLoadNewImage() {
     setState(() {
       imageUrl = "";
@@ -143,9 +123,6 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
                               sendToBack: (widget) {
                                 sendToBack(widget);
                                 piecesInPlace++;
-                                if (piecesInPlace == maxRow * maxCol) {
-                                  _showCompletedDialog();
-                                }
                               },
                             );
                           });
