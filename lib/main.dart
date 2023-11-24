@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'api.dart';
-import 'puzzle.dart';
 import 'dart:math';
 import 'settings.dart';
 import 'menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'puzzle.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() => runApp(MyApp());
 
@@ -105,61 +106,100 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     puzzleHeight = MediaQuery.of(context).size.height * 0.8;
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
-        ],
-      ),
+      backgroundColor: Color(0xFFE8E6E6),
       body: SafeArea(
         child: Center(
-          child: imageUrl.isNotEmpty
-              ? Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      width: puzzleWidth,
-                      height: puzzleHeight,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 2),
-                        color: Colors.grey,
-                      ),
-                    ),
-                    ...List.generate(maxRow, (row) {
-                      return List.generate(maxCol, (col) {
-                        return PuzzlePiece(
-                          image: Image.network(
-                            imageUrl,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              imageUrl.isNotEmpty
+                  ? Expanded(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
                             width: puzzleWidth,
                             height: puzzleHeight,
-                            fit: BoxFit.cover,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 1),
+                              color: Color(0xFFE8E6E6),
+                            ),
                           ),
-                          imageSize: Size(puzzleWidth, puzzleHeight),
-                          row: row,
-                          col: col,
-                          maxRow: maxRow,
-                          maxCol: maxCol,
-                          bringToTop: bringToTop,
-                          sendToBack: (widget) {
-                            sendToBack(widget);
-                            piecesInPlace++;
-                            if (piecesInPlace == maxRow * maxCol) {
-                              _showCompletedDialog();
-                            }
-                          },
-                        );
-                      });
-                    }).expand((pieces) => pieces).toList(),
-                  ],
-                )
-              : const CircularProgressIndicator(),
+                          ...List.generate(maxRow, (row) {
+                            return List.generate(maxCol, (col) {
+                              return PuzzlePiece(
+                                image: Image.network(
+                                  imageUrl,
+                                  width: puzzleWidth,
+                                  height: puzzleHeight,
+                                  fit: BoxFit.cover,
+                                ),
+                                imageSize: Size(puzzleWidth, puzzleHeight),
+                                row: row,
+                                col: col,
+                                maxRow: maxRow,
+                                maxCol: maxCol,
+                                bringToTop: bringToTop,
+                                sendToBack: sendToBack,
+                              );
+                            });
+                          }).expand((pieces) => pieces).toList(),
+                        ],
+                      ),
+                    )
+                  : CircularProgressIndicator(),
+              _buildButton(
+                title: 'Download',
+                onTap: () {},
+                iconPath: 'assets/Icon4.svg',
+                width: puzzleWidth,
+              ),
+              SizedBox(height: 20),
+              _buildButton(
+                title: 'Next',
+                onTap: () {},
+                width: puzzleWidth,
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+Widget _buildButton({
+  required String title,
+  VoidCallback? onTap,
+  String? iconPath,
+  double? width,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: width,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      decoration: BoxDecoration(color: Colors.white),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (iconPath != null) ...[
+            SvgPicture.asset(iconPath, width: 24, height: 24),
+            SizedBox(width: 6),
+          ],
+          Text(
+            title,
+            style: TextStyle(
+              color: Color(0xFF352F2F),
+              fontSize: 16,
+              fontFamily: 'FiraMono',
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
