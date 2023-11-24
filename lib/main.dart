@@ -34,6 +34,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
   late double puzzleWidth;
   late double puzzleHeight;
   List<Widget> pieces = [];
+  bool isPuzzleCompleted = false;
 
   int piecesInPlace = 0;
 
@@ -55,6 +56,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     String url = await apiService.getRandomImage(category: category);
     setState(() {
       imageUrl = url;
+      isPuzzleCompleted = false;
     });
   }
 
@@ -69,6 +71,10 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     setState(() {
       pieces.remove(widget);
       pieces.insert(0, widget);
+      piecesInPlace++;
+      if (piecesInPlace == maxRow * maxCol) {
+        isPuzzleCompleted = true;
+      }
     });
   }
 
@@ -120,10 +126,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
                               maxRow: maxRow,
                               maxCol: maxCol,
                               bringToTop: bringToTop,
-                              sendToBack: (widget) {
-                                sendToBack(widget);
-                                piecesInPlace++;
-                              },
+                              sendToBack: sendToBack,
                             );
                           });
                         }).expand((pieces) => pieces).toList(),
@@ -134,15 +137,13 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
               _buildButton(
                 title: "Download",
                 iconPath: 'assets/Icon4.svg',
-                onTap: () {},
+                onTap: isPuzzleCompleted ? () {} : null,
                 width: puzzleWidth,
               ),
               SizedBox(height: 10),
               _buildButton(
                 title: "Next",
-                onTap: () {
-                  _resetPuzzleAndLoadNewImage();
-                },
+                onTap: isPuzzleCompleted ? _resetPuzzleAndLoadNewImage : null,
                 width: puzzleWidth,
               ),
             ],
@@ -160,27 +161,30 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: width,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        decoration: BoxDecoration(color: Colors.white),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (iconPath != null) ...[
-              SvgPicture.asset(iconPath, width: 24, height: 24),
-              SizedBox(width: 6),
-            ],
-            Text(
-              title,
-              style: TextStyle(
-                color: Color(0xFF352F2F),
-                fontSize: 16,
-                fontFamily: 'FiraMono',
-                fontWeight: FontWeight.w400,
+      child: Opacity(
+        opacity: onTap != null ? 1.0 : 0.5,
+        child: Container(
+          width: width,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          decoration: BoxDecoration(color: Colors.white),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (iconPath != null) ...[
+                SvgPicture.asset(iconPath, width: 24, height: 24),
+                SizedBox(width: 6),
+              ],
+              Text(
+                title,
+                style: TextStyle(
+                  color: Color(0xFF352F2F),
+                  fontSize: 16,
+                  fontFamily: 'FiraMono',
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
