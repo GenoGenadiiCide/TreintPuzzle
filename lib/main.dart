@@ -89,65 +89,72 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
   @override
   Widget build(BuildContext context) {
     puzzleWidth = MediaQuery.of(context).size.width * 0.8;
-    puzzleHeight = MediaQuery.of(context).size.height * 0.8;
+    puzzleHeight = MediaQuery.of(context).size.height * 0.75;
 
     return Scaffold(
       backgroundColor: Color(0xFFE8E6E6),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              imageUrl.isNotEmpty
-                  ? Stack(
-                      clipBehavior: Clip.none,
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          width: puzzleWidth,
-                          height: puzzleHeight,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 1),
-                            color: Color(0xFFE8E6E6),
-                          ),
-                        ),
-                        ...List.generate(maxRow, (row) {
-                          return List.generate(maxCol, (col) {
-                            return PuzzlePiece(
-                              image: Image.network(
-                                imageUrl,
-                                width: puzzleWidth,
-                                height: puzzleHeight,
-                                fit: BoxFit.cover,
+        child: Column(
+          children: [
+            Header(),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  imageUrl.isNotEmpty
+                      ? Stack(
+                          clipBehavior: Clip.none,
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              width: puzzleWidth,
+                              height: puzzleHeight,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.black, width: 1),
+                                color: Color(0xFFE8E6E6),
                               ),
-                              imageSize: Size(puzzleWidth, puzzleHeight),
-                              row: row,
-                              col: col,
-                              maxRow: maxRow,
-                              maxCol: maxCol,
-                              bringToTop: bringToTop,
-                              sendToBack: sendToBack,
-                            );
-                          });
-                        }).expand((pieces) => pieces).toList(),
-                      ],
-                    )
-                  : const CircularProgressIndicator(),
-              SizedBox(height: 20),
-              _buildButton(
-                title: "Download",
-                iconPath: 'assets/Icon4.svg',
-                onTap: isPuzzleCompleted ? () {} : null,
-                width: puzzleWidth,
+                            ),
+                            ...List.generate(maxRow, (row) {
+                              return List.generate(maxCol, (col) {
+                                return PuzzlePiece(
+                                  image: Image.network(
+                                    imageUrl,
+                                    width: puzzleWidth,
+                                    height: puzzleHeight,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  imageSize: Size(puzzleWidth, puzzleHeight),
+                                  row: row,
+                                  col: col,
+                                  maxRow: maxRow,
+                                  maxCol: maxCol,
+                                  bringToTop: bringToTop,
+                                  sendToBack: sendToBack,
+                                );
+                              });
+                            }).expand((pieces) => pieces).toList(),
+                          ],
+                        )
+                      : const CircularProgressIndicator(),
+                  SizedBox(height: 20),
+                  _buildButton(
+                    title: "Download",
+                    iconPath: 'assets/Icon4.svg',
+                    onTap: isPuzzleCompleted ? () {} : null,
+                    width: puzzleWidth,
+                  ),
+                  SizedBox(height: 10),
+                  _buildButton(
+                    title: "Next",
+                    onTap:
+                        isPuzzleCompleted ? _resetPuzzleAndLoadNewImage : null,
+                    width: puzzleWidth,
+                  ),
+                ],
               ),
-              SizedBox(height: 10),
-              _buildButton(
-                title: "Next",
-                onTap: isPuzzleCompleted ? _resetPuzzleAndLoadNewImage : null,
-                width: puzzleWidth,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -186,6 +193,47 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 60,
+      padding: const EdgeInsets.only(top: 24),
+      decoration: BoxDecoration(color: Color(0xFFE8E6E6)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 4, left: 16, right: 12, bottom: 4),
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset('assets/Icon3.svg', width: 24, height: 24),
+                  SizedBox(width: 8),
+                  Text(
+                    'Back',
+                    style: TextStyle(
+                      color: Color(0xFF352F2F),
+                      fontSize: 18,
+                      fontFamily: 'FiraMono',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
