@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'puzzle.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gallery_saver_plus/gallery_saver.dart';
+import "gal.dart";
 
 void main() => runApp(MyApp());
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/puzzle': (context) => PuzzleScreen(),
         '/settings': (context) => SettingsPage(),
+        '/gallery': (context) => GalPage(),
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:treintpuzzle/gal.dart';
 import 'main.dart';
 import 'settings.dart';
 
@@ -60,7 +61,12 @@ class MainMenu extends StatelessWidget {
               _buildButton(
                 title: 'Gallery',
                 iconPath: 'assets/Icon1.svg',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GalPage()),
+                  );
+                },
               ),
               SizedBox(height: 20),
               _buildButton(
