@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   final String apiKey =
       "1dz3Fjt8HrNNW8XsRzfnTO2LthIKnnsbqVDRgTvi4ygnTxa2xplTRCXJ";
+  String? lastImageUrl;
 
   Future<String> getRandomImage({String category = 'nature'}) async {
     final response = await http.get(
@@ -17,8 +18,8 @@ class ApiService {
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      return data['photos'][0]['src']['large'] +
-          "?random=${Random().nextInt(100000)}";
+      lastImageUrl = data['photos'][0]['src']['large'];
+      return lastImageUrl!;
     } else {
       throw Exception('Failed to load image');
     }

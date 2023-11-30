@@ -6,6 +6,7 @@ import 'menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'puzzle.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gallery_saver_plus/gallery_saver.dart';
 
 void main() => runApp(MyApp());
 
@@ -86,6 +87,20 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     });
   }
 
+  void _downloadImage() async {
+    if (imageUrl.isNotEmpty) {
+      await GallerySaver.saveImage(imageUrl).then((bool? success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(success == true
+                ? 'Image saved to Gallery'
+                : 'Error saving image'),
+          ),
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     puzzleWidth = MediaQuery.of(context).size.width * 0.8;
@@ -141,7 +156,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
                   _buildButton(
                     title: "Download",
                     iconPath: 'assets/Icon4.svg',
-                    onTap: isPuzzleCompleted ? () {} : null,
+                    onTap: isPuzzleCompleted ? _downloadImage : null,
                     width: puzzleWidth,
                   ),
                   SizedBox(height: 10),
