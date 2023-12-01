@@ -5,9 +5,11 @@ import 'main.dart';
 import 'settings.dart';
 
 class MenuScreen extends StatelessWidget {
+  const MenuScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
         body: Center(
           child: MainMenu(),
@@ -18,6 +20,8 @@ class MenuScreen extends StatelessWidget {
 }
 
 class MainMenu extends StatelessWidget {
+  const MainMenu({super.key});
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -35,7 +39,7 @@ class MainMenu extends StatelessWidget {
             bottom: 52,
           ),
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Color(0xFFE8E6E6)),
+          decoration: const BoxDecoration(color: Color(0xFFE8E6E6)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
@@ -47,10 +51,11 @@ class MainMenu extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PuzzleScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const PuzzleScreen()),
                     );
                   },
-                  child: Container(
+                  child: SizedBox(
                     width: 148,
                     height: 130,
                     child: SvgPicture.asset("assets/Playbutton.svg"),
@@ -64,18 +69,19 @@ class MainMenu extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => GalPage()),
+                    MaterialPageRoute(builder: (context) => const GalPage()),
                   );
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _buildButton(
                 title: 'Settings',
                 iconPath: 'assets/Icon2.svg',
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage()),
                   );
                 },
               ),
@@ -93,17 +99,17 @@ class MainMenu extends StatelessWidget {
       child: Container(
         width: 280,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (iconPath != null) ...[
               SvgPicture.asset(iconPath, width: 24, height: 24),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
             ],
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xFF352F2F),
                 fontSize: 16,
                 fontFamily: 'FiraMono',

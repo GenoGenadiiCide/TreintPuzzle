@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'api.dart';
 import 'dart:math';
@@ -9,23 +11,27 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gallery_saver_plus/gallery_saver.dart';
 import "gal.dart";
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MenuScreen(),
+      home: const MenuScreen(),
       routes: {
-        '/puzzle': (context) => PuzzleScreen(),
-        '/settings': (context) => SettingsPage(),
-        '/gallery': (context) => GalPage(),
+        '/puzzle': (context) => const PuzzleScreen(),
+        '/settings': (context) => const SettingsPage(),
+        '/gallery': (context) => const GalPage(),
       },
     );
   }
 }
 
 class PuzzleScreen extends StatefulWidget {
+  const PuzzleScreen({super.key});
+
   @override
   _PuzzleScreenState createState() => _PuzzleScreenState();
 }
@@ -109,11 +115,11 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
     puzzleHeight = MediaQuery.of(context).size.height * 0.75;
 
     return Scaffold(
-      backgroundColor: Color(0xFFE8E6E6),
+      backgroundColor: const Color(0xFFE8E6E6),
       body: SafeArea(
         child: Column(
           children: [
-            Header(),
+            const Header(),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +135,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
                               decoration: BoxDecoration(
                                 border:
                                     Border.all(color: Colors.black, width: 1),
-                                color: Color(0xFFE8E6E6),
+                                color: const Color(0xFFE8E6E6),
                               ),
                             ),
                             ...List.generate(maxRow, (row) {
@@ -154,14 +160,14 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
                           ],
                         )
                       : const CircularProgressIndicator(),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildButton(
                     title: "Download",
                     iconPath: 'assets/Icon4.svg',
                     onTap: isPuzzleCompleted ? _downloadImage : null,
                     width: puzzleWidth,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   _buildButton(
                     title: "Next",
                     onTap:
@@ -190,17 +196,17 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
         child: Container(
           width: width,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          decoration: BoxDecoration(color: Colors.white),
+          decoration: const BoxDecoration(color: Colors.white),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (iconPath != null) ...[
                 SvgPicture.asset(iconPath, width: 24, height: 24),
-                SizedBox(width: 6),
+                const SizedBox(width: 6),
               ],
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF352F2F),
                   fontSize: 16,
                   fontFamily: 'FiraMono',
@@ -216,13 +222,15 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
 }
 
 class Header extends StatelessWidget {
+  const Header({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 60,
       padding: const EdgeInsets.only(top: 24),
-      decoration: BoxDecoration(color: Color(0xFFE8E6E6)),
+      decoration: const BoxDecoration(color: Color(0xFFE8E6E6)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -237,8 +245,8 @@ class Header extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SvgPicture.asset('assets/Icon3.svg', width: 24, height: 24),
-                  SizedBox(width: 8),
-                  Text(
+                  const SizedBox(width: 8),
+                  const Text(
                     'Back',
                     style: TextStyle(
                       color: Color(0xFF352F2F),

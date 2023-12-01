@@ -11,7 +11,7 @@ class PuzzlePiece extends StatefulWidget {
   final Function bringToTop;
   final Function sendToBack;
 
-  PuzzlePiece(
+  const PuzzlePiece(
       {Key? key,
       required this.image,
       required this.imageSize,
@@ -88,15 +88,15 @@ class PuzzlePieceState extends State<PuzzlePiece> {
           opacity: opacity,
           child: isMovable
               ? ClipPath(
-                  child: widget.image,
                   clipper: PuzzlePieceClipper(
                       widget.row, widget.col, widget.maxRow, widget.maxCol),
+                  child: widget.image,
                 )
               : IgnorePointer(
                   child: ClipPath(
-                    child: widget.image,
                     clipper: PuzzlePieceClipper(
                         widget.row, widget.col, widget.maxRow, widget.maxCol),
+                    child: widget.image,
                   ),
                 ),
         ),
@@ -133,7 +133,7 @@ class PuzzlePiecePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color = Color(0x80FFFFFF)
+      ..color = const Color(0x80FFFFFF)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 

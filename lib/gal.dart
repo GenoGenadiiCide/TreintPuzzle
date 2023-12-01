@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class GalPage extends StatefulWidget {
+  const GalPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _GalPageState createState() => _GalPageState();
 }
 
@@ -10,7 +13,7 @@ class _GalPageState extends State<GalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE8E6E6),
+      backgroundColor: const Color(0xFFE8E6E6),
       body: Column(
         children: [
           Header(
@@ -25,7 +28,7 @@ class _GalPageState extends State<GalPage> {
 class Header extends StatelessWidget {
   final Function onSave;
 
-  Header({required this.onSave});
+  const Header({super.key, required this.onSave});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class Header extends StatelessWidget {
       width: double.infinity,
       height: 120,
       padding: const EdgeInsets.only(top: 24),
-      decoration: BoxDecoration(color: Color(0xFFE8E6E6)),
+      decoration: const BoxDecoration(color: Color(0xFFE8E6E6)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -51,8 +54,8 @@ class Header extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SvgPicture.asset('assets/Icon3.svg', width: 24, height: 24),
-                  SizedBox(width: 8),
-                  Text(
+                  const SizedBox(width: 8),
+                  const Text(
                     'Back',
                     style: TextStyle(
                       color: Color(0xFF352F2F),
@@ -64,9 +67,9 @@ class Header extends StatelessWidget {
               ),
             ),
           ),
-          Flexible(
+          const Flexible(
             child: Padding(
-              padding: const EdgeInsets.only(left: 16, top: 8),
+              padding: EdgeInsets.only(left: 16, top: 8),
               child: Text(
                 'Gallery',
                 style: TextStyle(
@@ -78,7 +81,7 @@ class Header extends StatelessWidget {
               ),
             ),
           ),
-          Divider(color: Color(0xFF352F2F)),
+          const Divider(color: Color(0xFF352F2F)),
         ],
       ),
     );

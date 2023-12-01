@@ -1,8 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -38,7 +42,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(120.0),
+          preferredSize: const Size.fromHeight(120.0),
           child: Header(
             onSave: () async {
               if (_isOtherSelected &&
@@ -51,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
         body: Container(
-          color: Color(0xFFE8E6E6),
+          color: const Color(0xFFE8E6E6),
           child: ListView(
             children: [
               ...categories
@@ -69,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return ListTile(
       title: Text(
         category,
-        style: TextStyle(
+        style: const TextStyle(
           color: Color(0xFF352F2F),
           fontSize: 16,
           fontFamily: 'FiraMono',
@@ -84,7 +88,7 @@ class _SettingsPageState extends State<SettingsPage> {
             _isOtherSelected = selectedCategory == 'Other';
           });
         },
-        activeColor: Color(0xFF80C668),
+        activeColor: const Color(0xFF80C668),
       ),
     );
   }
@@ -94,7 +98,7 @@ class _SettingsPageState extends State<SettingsPage> {
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
       child: TextField(
         controller: _customCategoryController,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Mountains',
           hintStyle: TextStyle(color: Color(0xFFA79494)),
           enabledBorder: UnderlineInputBorder(
@@ -112,7 +116,7 @@ class _SettingsPageState extends State<SettingsPage> {
 class Header extends StatelessWidget {
   final Function onSave;
 
-  Header({required this.onSave});
+  const Header({super.key, required this.onSave});
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +124,7 @@ class Header extends StatelessWidget {
       width: double.infinity,
       height: 120,
       padding: const EdgeInsets.only(top: 24),
-      decoration: BoxDecoration(color: Color(0xFFE8E6E6)),
+      decoration: const BoxDecoration(color: Color(0xFFE8E6E6)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -138,8 +142,8 @@ class Header extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SvgPicture.asset('assets/Icon3.svg', width: 24, height: 24),
-                  SizedBox(width: 8),
-                  Text(
+                  const SizedBox(width: 8),
+                  const Text(
                     'Back',
                     style: TextStyle(
                       color: Color(0xFF352F2F),
@@ -151,9 +155,9 @@ class Header extends StatelessWidget {
               ),
             ),
           ),
-          Flexible(
+          const Flexible(
             child: Padding(
-              padding: const EdgeInsets.only(left: 16, top: 8),
+              padding: EdgeInsets.only(left: 16, top: 8),
               child: Text(
                 'Settings',
                 style: TextStyle(
@@ -165,7 +169,7 @@ class Header extends StatelessWidget {
               ),
             ),
           ),
-          Divider(color: Color(0xFF352F2F)),
+          const Divider(color: Color(0xFF352F2F)),
         ],
       ),
     );
